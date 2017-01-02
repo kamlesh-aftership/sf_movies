@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+        </title>
+        <link rel="stylesheet" href="https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.1/angular-material.css">
+        <link rel="stylesheet" href="https://material.angularjs.org/1.1.1/docs.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+        <link rel="stylesheet" href="css/custom.css">
+     </head>
+   
+   <body ng-app="sfmovieApp">
+           
+           <div ng-controller="locationController as ctrl" layout="column" ng-cloak="" class="autocompletedemoBasicUsage">
+                <md-content class="md-padding">
+                        <form ng-submit="$event.preventDefault()">
+                                <md-autocomplete  ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedItem"  md-search-text="ctrl.searchText" md-selected-item-change="ctrl.selectedItemChange(item)" md-items="item in ctrl.querySearch(ctrl.searchText)" md-item-text="item.display" md-min-length="0" placeholder="Search movie">
+                                        <md-item-template>
+                                        <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
+                                        </md-item-template>
+                                        <md-not-found>
+                                                No Movies matching "{{ctrl.searchText}}" were found.
+                                        <a ng-click="ctrl.newState(ctrl.searchText)">Create a new one!</a>
+                                        </md-not-found>
+                                </md-autocomplete>
+                                <br>
+                        </form>
+                </md-content>
+                <div>
+                        <ui-gmap-google-map center='map.center' zoom='map.zoom'>
+                                <ui-gmap-marker ng-repeat="mark in marker" icon="mark.icon" coords="mark.coords" options="mark.options" idkey="mark.id">
+                                </ui-gmap-marker>
+                        </ui-gmap-google-map>
+                </div>
+          </div>
+
+        <script src="js/others/angular.min.js"></script>
+        <script src="js/others/angular-google-maps.min.js"></script>
+        <script src="js/others/google-maps-api.js"></script>
+        <!--<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyClNDHc4vS3RGjLy1PqutSgVGqXGJprPaI"></script>-->
+        <script src="js/others/lodash.min.js"></script>
+        
+        <script src="js/others/angular-animate.min.js"></script>
+        <script src="js/others/angular-route.min.js"></script>
+        <script src="js/others/angular-aria.min.js"></script>
+        <script src="js/others/angular-messages.min.js"></script>
+        <script src="js/others/svg-assets-cache.js"></script>
+        <script src="js/others/angular-material.js"></script>
+        
+        <script src="js/custom/ctrl.js"></script>
+   </body>
+</html>
