@@ -1,13 +1,13 @@
 'use strict';
 
-angular.module('sfmovieApp', ['uiGmapgoogle-maps', 'ngMaterial', 'ngMessages', 'material.svgAssetsCache'])
-        .controller('locationController', function ($scope, $log, $http) {
+const app = angular.module('sfmovieApp', ['uiGmapgoogle-maps', 'ngMaterial', 'ngMessages', 'material.svgAssetsCache']);
+app.controller('locationController', function ($scope, $log, $http) {
 	$scope.map = {
 		center: {
 			latitude: 37.791549,
 			longitude: -122.4113534
 		},
-		zoom: 8
+		zoom: 10
 	};
 	$scope.marker = [{
 		id: 0,
@@ -57,8 +57,8 @@ angular.module('sfmovieApp', ['uiGmapgoogle-maps', 'ngMaterial', 'ngMessages', '
 		if (item !== undefined) {
 			$http.get('/location/' + item.display).then(function (response) {
 				$scope.marker = $scope.marker.splice(0, 1);
-				for (let i = 0; i < response.data[0].locations.length; i++) {
-					$scope.createMarker(response.data[0].locations[i]);
+				for (let i = 0; i < response.data.locations.length; i++) {
+					$scope.createMarker(response.data.locations[i]);
 				}
 			});
 		}
@@ -71,3 +71,18 @@ angular.module('sfmovieApp', ['uiGmapgoogle-maps', 'ngMaterial', 'ngMessages', '
 		};
 	}
 });
+
+app.config(function ($provide, $httpProvider) {
+	$provide.factory('ErrorInterceptor', function ($q) {
+		return {
+			responseError: function (rejection) {
+				alert('an error occured. Please try again after some time.');
+				console.log(rejection);
+				return $q.reject(rejection);
+			}
+		};
+	});
+
+	$httpProvider.interceptors.push('ErrorInterceptor');
+});
+

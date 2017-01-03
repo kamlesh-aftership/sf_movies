@@ -6,31 +6,28 @@ const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/sfmovies');
 
 const app = express();
-const MoviesModel = require('./models/MovieModel');
+const route = require('./config/routes');
 
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
-app.post('/location', function (req, res) {
-	let model = new MoviesModel(req.body);
-	model.save(function (err, movie) {
-		if (err) console.log('err:' + err);
-		res.send(movie);
-	});
-});
 
 app.get('/location/:name', function (req, res) {
-	MoviesModel.find({title: req.params.name}, function (err, movie) {
-		if (err) res.send(500, {error: err});
-		res.send(movie);
+	let promise = route.getMovieByName(req.params.name);
+	promise.then(function (data) {
+		res.json(data);
+	},
+	function (error) {
+		res.status(500).send({error: error});
 	});
 });
 
 app.get('/location', function (req, res) {
-	MoviesModel.find(function (err, movies) {
-		if (!movies) {
-			return res.send(err);
-		}
-		return res.send(movies);
+	let promise = route.getAllMovie();
+	promise.then(function (data) {
+		res.send(data);
+	},
+	function (error) {
+		res.status(500).send({error: error});
 	});
 });
 
