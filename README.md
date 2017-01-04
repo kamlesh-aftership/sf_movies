@@ -1,6 +1,6 @@
 # SF Movies
 
-Listing of filming locations of movies shot in San Francisco starting from 1924 using Full-stack. You'll find the titles, locations, fun facts, names of the director, writer, actors, and studio for most of these films.
+Map that shows filming locations of movies shot in San Francisco starting from 1924.
 
 # Getting Started
 
