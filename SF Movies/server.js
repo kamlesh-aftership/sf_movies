@@ -8,7 +8,7 @@ mongoose.connect('mongodb://localhost/sfmovies');
 const app = express();
 const route = require('./config/routes');
 
-app.use(express.static(__dirname + '/public'));
+app.use('/sfmovies', express.static(__dirname + '/assets'));
 app.use(bodyParser.json());
 
 app.get('/location/:name', function (req, res) {
